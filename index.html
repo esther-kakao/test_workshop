@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>카카오 테크 백서</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animation.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -460,45 +462,50 @@
     <div class="container">
         <header>
             <div class="header-left">
-                <img src="logo.png" alt="Kakao Logo" class="logo" id="siteLogo" style="cursor: pointer;">
-                <h1 id="siteTitle" style="cursor: pointer;">카카오 테크 백서</h1>
+                <img src="logo.png" alt="Kakao Logo" class="logo fade-in" id="siteLogo" style="cursor: pointer;">
+                <h1 id="siteTitle" class="slide-in" style="cursor: pointer;">카카오 테크 백서</h1>
             </div>
             <div class="header-right">
                 <form action="search.html" method="get" class="search-form">
-                    <input type="search" name="q" class="search-bar" placeholder="Q 용어 검색... (Ctrl + K)">
-                    <button type="submit" class="search-button">검색</button>
+                    <div class="search-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="search" name="q" class="search-bar" placeholder="Q 용어 검색... (Ctrl + K)">
+                        <button type="submit" class="search-button">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </form>
                 <div class="auth-links">
-                    <a href="login.html">로그인</a>
-                    <a href="signup.html">회원가입</a>
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> 로그인</a>
+                    <a href="signup.html"><i class="fas fa-user-plus"></i> 회원가입</a>
                 </div>
             </div>
         </header>
 
-        <nav class="category-filters">
-            <button class="active">전체</button>
-            <button>프로그래밍</button>
-            <button>웹 개발</button>
-            <button>인공지능</button>
-            <button>클라우드</button>
-            <button>보안</button>
+        <nav class="category-filters fade-in">
+            <button class="active delay-1">전체</button>
+            <button class="delay-2">프로그래밍</button>
+            <button class="delay-3">웹 개발</button>
+            <button class="delay-4">인공지능</button>
+            <button class="delay-5">클라우드</button>
+            <button class="delay-5">보안</button>
         </nav>
 
         <h2 class="glossary-list-header">용어 목록</h2>
         
         <main class="glossary-grid">
-            <article class="term-card">
+            <article class="term-card hover-lift slide-up delay-1">
                 <span class="category">앱 개발</span>
                 <h3>API</h3>
                 <p>애플리케이션 프로그래밍 인터페이스(Application Programming Interface)의 약자로, 서로 다른 소프트웨어 간의 통신 방법을 정의합니다.</p>
-                <a href="#" class="details-link">자세히 보기</a>
+                <a href="#" class="details-link reveal-border">자세히 보기</a>
             </article>
 
-            <article class="term-card">
+            <article class="term-card hover-lift slide-up delay-2">
                 <span class="category">프로그래밍</span>
                 <h3>알고리즘</h3>
                 <p>문제를 해결하기 위한 명확하게 정의된 단계별 절차입니다.</p>
-                <a href="#" class="details-link">자세히 보기</a>
+                <a href="#" class="details-link reveal-border">자세히 보기</a>
             </article>
 
             <article class="term-card">
@@ -523,17 +530,17 @@
                 <a href="#" class="details-link">자세히 보기</a>
             </article>
 
-             <article class="term-card">
-                <span class="new-badge">NEW</span>
+             <article class="term-card hover-lift slide-up delay-5">
+                <span class="new-badge pulse">NEW</span>
                 <span class="category">인공지능</span>
                 <h3>딥러닝</h3>
                 <p>인간의 뇌를 모방한 인공신경망을 사용하는 머신러닝의 한 분야입니다.</p>
-                <a href="#" class="details-link">자세히 보기</a>
+                <a href="#" class="details-link reveal-border">자세히 보기</a>
             </article>
         </main>
 
-        <div class="gnb-section education-section">
-            <h2 class="gnb-title">사내 교육 소식</h2>
+        <div class="gnb-section education-section fade-in">
+            <h2 class="gnb-title slide-in">사내 교육 소식</h2>
             <div class="gnb-content">
                 <div class="education-card" data-category="ai">
                     <span class="category">인공지능</span>
@@ -603,8 +610,8 @@
         </footer>
     </div>
     
-    <button class="talent-register-btn" id="talentRegisterBtn">
-        <i>👥</i> 인재등록
+    <button class="talent-register-btn bounce" id="talentRegisterBtn">
+        <i class="fas fa-user-tie"></i> 인재등록
     </button>
     
     <div class="modal" id="talentModal">
