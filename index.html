@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오 테크 백서</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            height: 40px;
+            margin-right: 15px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #2c3e50;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        .search-bar {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 15px;
+            font-size: 14px;
+        }
+        .auth-links a {
+            text-decoration: none;
+            color: #3498db;
+            margin-left: 15px;
+            font-size: 14px;
+        }
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        .category-filters {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .category-filters button {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #555;
+        }
+        .category-filters button.active,
+        .category-filters button:hover {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        .glossary-list-header {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .term-card {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: relative; /* For NEW badge positioning */
+        }
+        .term-card .new-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 3px 8px;
+            font-size: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .term-card h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #2980b9;
+        }
+        .term-card .category {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            display: inline-block;
+            background-color: #ecf0f1;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        .term-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .term-card .details-link {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .term-card .details-link:hover {
+            text-decoration: underline;
+        }
+
+        .gnb-section {
+            margin: 30px 0;
+            padding: 25px;
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .gnb-title {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .gnb-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .tech-trend-card {
+            background-color: white;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tech-trend-card h3 {
+            color: #1a5276;
+            margin-top: 0;
+            font-size: 18px;
+        }
+        
+        .tech-trend-card p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            color: #3498db;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .read-more:hover {
+            text-decoration: underline;
+        }
+        
+        /* 교육 소식 스타일 */
+        .education-section {
+            background-color: #fbfaf2;
+        }
+        
+        .education-card {
+            background-color: white;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            position: relative;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .education-card h3 {
+            color: #1a5276;
+            margin-top: 0;
+            font-size: 18px;
+            margin-bottom: 5px;
+            height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .education-date {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 10px;
+            height: 16px;
+        }
+        
+        .education-card .content-wrapper {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .education-card p:not(.education-date) {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 63px; /* 3줄 고정 높이 */
+        }
+        
+        .education-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #f2f2f2;
+            margin-top: auto; /* 하단에 고정 */
+            height: 40px; /* 푸터 높이 고정 */
+        }
+        
+        .education-status {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            display: inline-block;
+            width: 70px;
+            text-align: center;
+        }
+        
+        .education-status.open {
+            background-color: #e8f7e9;
+            color: #27ae60;
+        }
+        
+        .education-status.full {
+            background-color: #f2f2f2;
+            color: #7f8c8d;
+        }
+        
+        .apply-btn, .education-footer .read-more {
+            background-color: #f9e000;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            display: inline-block;
+            width: 80px;
+            text-align: center;
+        }
+        
+        .apply-btn:hover, .education-footer .read-more:hover {
+            background-color: #ffe812;
+        }
+        
+        .education-footer .read-more {
+            background-color: #f0f0f0;
+            color: #555;
+        }
+        
+        .education-footer .read-more:hover {
+            background-color: #e6e6e6;
+        }
+        
+        .talent-register-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #f9e000;
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+        
+        .talent-register-btn:hover {
+            background-color: #ffe812;
+            transform: translateY(-2px);
+            transition: all 0.2s;
+        }
+        
+        .talent-register-btn i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .skill-tag {
+            background-color: #e8f4fd;
+            color: #3498db;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .skill-tag span {
+            margin-right: 5px;
+        }
+        
+        .skill-tag button {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+        }
+        
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            color: #777;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <img src="logo.png" alt="Kakao Logo" class="logo" id="siteLogo" style="cursor: pointer;">
+                <h1 id="siteTitle" style="cursor: pointer;">카카오 테크 백서</h1>
+            </div>
+            <div class="header-right">
+                <form action="search.html" method="get" class="search-form">
+                    <input type="search" name="q" class="search-bar" placeholder="Q 용어 검색... (Ctrl + K)">
+                    <button type="submit" class="search-button">검색</button>
+                </form>
+                <div class="auth-links">
+                    <a href="login.html">로그인</a>
+                    <a href="signup.html">회원가입</a>
+                </div>
+            </div>
+        </header>
+
+        <nav class="category-filters">
+            <button class="active">전체</button>
+            <button>프로그래밍</button>
+            <button>웹 개발</button>
+            <button>인공지능</button>
+            <button>클라우드</button>
+            <button>보안</button>
+        </nav>
+
+        <h2 class="glossary-list-header">용어 목록</h2>
+        
+        <main class="glossary-grid">
+            <article class="term-card">
+                <span class="category">앱 개발</span>
+                <h3>API</h3>
+                <p>애플리케이션 프로그래밍 인터페이스(Application Programming Interface)의 약자로, 서로 다른 소프트웨어 간의 통신 방법을 정의합니다.</p>
+                <a href="#" class="details-link">자세히 보기</a>
+            </article>
+
+            <article class="term-card">
+                <span class="category">프로그래밍</span>
+                <h3>알고리즘</h3>
+                <p>문제를 해결하기 위한 명확하게 정의된 단계별 절차입니다.</p>
+                <a href="#" class="details-link">자세히 보기</a>
+            </article>
+
+            <article class="term-card">
+                <span class="category">인공지능</span>
+                <h3>머신 러닝</h3>
+                <p>컴퓨터가 명시적인 프로그래밍 없이 데이터로부터 학습하고 예측하는 인공지능의 한 분야입니다.</p>
+                <a href="#" class="details-link">자세히 보기</a>
+            </article>
+
+            <article class="term-card">
+                <span class="new-badge">NEW</span>
+                <span class="category">프로그래밍</span>
+                <h3>프레임워크</h3>
+                <p>소프트웨어 개발을 위한 구조와 도구를 제공하는 플랫폼입니다.</p>
+                <a href="#" class="details-link">자세히 보기</a>
+            </article>
+
+            <article class="term-card">
+                <span class="category">클라우드</span>
+                <h3>클라우드 컴퓨팅</h3>
+                <p>인터넷을 통해 컴퓨팅 리소스를 제공하는 서비스 모델입니다.</p>
+                <a href="#" class="details-link">자세히 보기</a>
+            </article>
+
+             <article class="term-card">
+                <span class="new-badge">NEW</span>
+                <span class="category">인공지능</span>
+                <h3>딥러닝</h3>
+                <p>인간의 뇌를 모방한 인공신경망을 사용하는 머신러닝의 한 분야입니다.</p>
+                <a href="#" class="details-link">자세히 보기</a>
+            </article>
+        </main>
+
+        <div class="gnb-section education-section">
+            <h2 class="gnb-title">사내 교육 소식</h2>
+            <div class="gnb-content">
+                <div class="education-card" data-category="ai">
+                    <span class="category">인공지능</span>
+                    <h3>AI 활용 워크숍</h3>
+                    <p class="education-date">2025.06.15 - 2025.06.17</p>
+                    <div class="content-wrapper">
+                        <p>생성형 AI를 활용한 서비스 기획 및 개발 워크숍이 진행됩니다. 실무 적용을 위한 실습 중심으로 구성됩니다.</p>
+                    </div>
+                    <div class="education-footer">
+                        <span class="education-status open">신청 가능</span>
+                        <a href="#" class="apply-btn">신청하기</a>
+                    </div>
+                </div>
+                <div class="education-card" data-category="cloud">
+                    <span class="category">클라우드</span>
+                    <h3>클라우드 아키텍처 마스터 과정</h3>
+                    <p class="education-date">2025.06.22 - 2025.06.29</p>
+                    <div class="content-wrapper">
+                        <p>MSA와 서버리스 아키텍처를 활용한 확장 가능한 시스템 설계 과정입니다. 아키텍처 설계 실습이 포함됩니다.</p>
+                    </div>
+                    <div class="education-footer">
+                        <span class="education-status full">마감</span>
+                        <a href="#" class="read-more">상세보기</a>
+                    </div>
+                </div>
+                <div class="education-card" data-category="programming">
+                    <span class="category">프로그래밍</span>
+                    <h3>신입 개발자 부트캠프</h3>
+                    <p class="education-date">2025.07.10 - 2025.08.10</p>
+                    <div class="content-wrapper">
+                        <p>신입 개발자를 위한 집중 교육 과정으로, 현업 프로젝트 참여를 위한 실무 기술을 학습합니다.</p>
+                    </div>
+                    <div class="education-footer">
+                        <span class="education-status open">신청 가능</span>
+                        <a href="#" class="apply-btn">신청하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="gnb-section">
+            <h2 class="gnb-title">사내 기술 동향</h2>
+            <div class="gnb-content">
+                <div class="tech-trend-card" data-category="cloud">
+                    <span class="category">클라우드</span>
+                    <h3>클라우드 네이티브 개발</h3>
+                    <p>최근 우리 회사에서는 클라우드 네이티브 개발 방식을 채택하여 확장성과 유연성을 높이고 있습니다.</p>
+                    <a href="#" class="read-more">더 보기</a>
+                </div>
+                <div class="tech-trend-card" data-category="ai">
+                    <span class="category">인공지능</span>
+                    <h3>생성형 AI 활용</h3>
+                    <p>생성형 AI를 활용한 새로운 서비스 개발과 내부 프로세스 개선이 진행 중입니다.</p>
+                    <a href="#" class="read-more">더 보기</a>
+                </div>
+                <div class="tech-trend-card" data-category="web">
+                    <span class="category">웹 개발</span>
+                    <h3>디지털 트랜스포메이션</h3>
+                    <p>전사적인 디지털 전환 가속화를 위한 로드맵과 실행 전략이 마련되었습니다.</p>
+                    <a href="#" class="read-more">더 보기</a>
+                </div>
+            </div>
+        </div>
+            
+        <footer>
+            <p>&copy; 2025 카카오 테크 백서. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <button class="talent-register-btn" id="talentRegisterBtn">
+        <i>👥</i> 인재등록
+    </button>
+    
+    <div class="modal" id="talentModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2 class="modal-title">인재 등록</h2>
+            <form id="talentForm">
+                <div class="form-group">
+                    <label for="name">이름 *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">이메일 *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">연락처 *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="position">희망 직무 *</label>
+                    <select id="position" name="position" required>
+                        <option value="">선택해주세요</option>
+                        <option value="backend">백엔드 개발자</option>
+                        <option value="frontend">프론트엔드 개발자</option>
+                        <option value="fullstack">풀스택 개발자</option>
+                        <option value="mobile">모바일 개발자</option>
+                        <option value="devops">DevOps/인프라 엔지니어</option>
+                        <option value="data">데이터 엔지니어/과학자</option>
+                        <option value="ai">AI/ML 엔지니어</option>
+                        <option value="security">보안 엔지니어</option>
+                        <option value="pm">프로덕트 매니저</option>
+                        <option value="designer">UX/UI 디자이너</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="career">경력 *</label>
+                    <select id="career" name="career" required>
+                        <option value="">선택해주세요</option>
+                        <option value="new">신입</option>
+                        <option value="1-3">1-3년</option>
+                        <option value="4-7">4-7년</option>
+                        <option value="8-10">8-10년</option>
+                        <option value="10+">10년 이상</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="skills">보유 기술</label>
+                    <input type="text" id="skillInput" placeholder="기술 입력 후 엔터">
+                    <div class="skills-container" id="skillsContainer">
+                        <!-- 스킬 태그가 여기 추가됩니다 -->
+                    </div>
+                    <input type="hidden" id="skills" name="skills">
+                </div>
+                
+                <div class="form-group">
+                    <label for="introduction">자기소개</label>
+                    <textarea id="introduction" name="introduction" placeholder="간략한 자기소개를 작성해주세요"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="portfolio">포트폴리오 URL</label>
+                    <input type="url" id="portfolio" name="portfolio" placeholder="GitHub, Blog 등 URL">
+                </div>
+                
+                <button type="submit" class="submit-btn">등록하기</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // 모달 관련 기능
+        const talentBtn = document.getElementById('talentRegisterBtn');
+        const modal = document.getElementById('talentModal');
+        const closeBtn = document.getElementById('closeModal');
+        
+        talentBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // 스킬 태그 추가 기능
+        const skillInput = document.getElementById('skillInput');
+        const skillsContainer = document.getElementById('skillsContainer');
+        const skillsHidden = document.getElementById('skills');
+        let skillsList = [];
+        
+        skillInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && skillInput.value.trim() !== '') {
+                e.preventDefault();
+                const skill = skillInput.value.trim();
+                if (!skillsList.includes(skill)) {
+                    addSkill(skill);
+                    skillsList.push(skill);
+                    updateSkillsInput();
+                }
+                skillInput.value = '';
+            }
+        });
+        
+        function addSkill(skill) {
+            const skillTag = document.createElement('div');
+            skillTag.className = 'skill-tag';
+            skillTag.innerHTML = `
+                <span>${skill}</span>
+                <button type="button" class="remove-skill">×</button>
+            `;
+            skillsContainer.appendChild(skillTag);
+            
+            const removeBtn = skillTag.querySelector('.remove-skill');
+            removeBtn.addEventListener('click', () => {
+                skillsContainer.removeChild(skillTag);
+                skillsList = skillsList.filter(s => s !== skill);
+                updateSkillsInput();
+            });
+        }
+        
+        function updateSkillsInput() {
+            skillsHidden.value = JSON.stringify(skillsList);
+        }
+        
+        
+        // 폼 제출 처리
+        const talentForm = document.getElementById('talentForm');
+        talentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // 폼 데이터 수집
+            const formData = new FormData(talentForm);
+            const talentData = {};
+            for (const [key, value] of formData.entries()) {
+                talentData[key] = value;
+            }
+            
+            // 스킬 데이터 처리
+            talentData.skills = skillsList.join(', ');
+            
+            // 이메일로 데이터 전송
+            await sendEmailToRecruiter(talentData);
+        });
+        
+        // 담당자에게 이메일 전송 함수
+        async function sendEmailToRecruiter(data) {
+            // 로딩 상태 표시
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalBtnText = submitBtn.textContent;
+            
+            try {
+                submitBtn.textContent = '전송 중...';
+                submitBtn.disabled = true;
+                
+                // 직무와 경력 이름 추가
+                data.positionName = getPositionName(data.position);
+                data.careerName = getCareerName(data.career);
+                
+                // API 호출
+                const response = await fetch('http://localhost:3001/api/register-talent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // 응답 처리
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('인재 등록이 완료되었습니다. 검토 후 연락드리겠습니다.');
+                    modal.style.display = 'none';
+                    talentForm.reset();
+                    skillsContainer.innerHTML = '';
+                    skillsList = [];
+                } else {
+                    alert(result.message || '인재 등록 중 오류가 발생했습니다. 다시 시도해주세요.');
+                }
+            } catch (error) {
+                console.error('API 호출 중 오류 발생:', error);
+                alert('서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.');
+            } finally {
+                // 버튼 상태 복원
+                const submitBtn = document.querySelector('.submit-btn');
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        }
+        
+        // 직무명 가져오기
+        function getPositionName(positionValue) {
+            const positions = {
+                'backend': '백엔드 개발자',
+                'frontend': '프론트엔드 개발자',
+                'fullstack': '풀스택 개발자',
+                'mobile': '모바일 개발자',
+                'devops': 'DevOps/인프라 엔지니어',
+                'data': '데이터 엔지니어/과학자',
+                'ai': 'AI/ML 엔지니어',
+                'security': '보안 엔지니어',
+                'pm': '프로덕트 매니저',
+                'designer': 'UX/UI 디자이너'
+            };
+            return positions[positionValue] || positionValue;
+        }
+        
+        // 경력명 가져오기
+        function getCareerName(careerValue) {
+            const careers = {
+                'new': '신입',
+                '1-3': '1-3년',
+                '4-7': '4-7년',
+                '8-10': '8-10년',
+                '10+': '10년 이상'
+            };
+            return careers[careerValue] || careerValue;
+        }
+    </script>
+    <script src="index.js"></script>
+</body>
+</html>
